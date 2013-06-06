@@ -1,5 +1,5 @@
 from django.db import models
-
+#git test
 class Person(models.Model):
     """
     The information of a user includes the nick name, real name, birthday, gender, university, subject, commencement date, and introduction about oneself.
