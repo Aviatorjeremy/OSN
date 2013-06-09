@@ -1,0 +1,8 @@
+<a1>欢迎登录</a1>
+{{error}}
+<form action="" method="POST">{% csrf_token %}
+email:<input type = "text" name="email"/>
+password:<input type = "password" name="password"/>
+	<input type = "submit" name="submit" value="提交"/>
+	<input type = "reset" name="reset" value="取消"/>
+</form>

@@ -1,0 +1,12 @@
+<a1>设置</a1>
+{{error}}
+<form action="" method = "post" />{% csrf_token %}
+	<label>现密码:</label>
+	<input type = "password" name="current_password"/>
+	<label>新密码:</label>
+	<input type = "password" name="new_password"/>
+	<label>确认新密码:</label>
+	<input type = "password" name="conform_password"/>
+	<input type = "submit" name="submit" value="提交"/>
+	<input type = "reset" name="reset" value="取消"/>
+</form>
