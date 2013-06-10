@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.forms import EmailField
 from django.core.exceptions import ValidationError
 
-from accounts.models import MyUser
+from accounts.models import MyUser, UserProfile
 
 def registration(request):
     """
@@ -57,6 +57,40 @@ def settings(request):
             return render(request, 'accounts/success.html')
         else:
             return render(request, 'accounts/settings.html',{'error':result})
+
+def profileManage(request):
+    """
+    profile_setting
+       datetime format is yyyy-mm-dd
+    """
+    user_id = request.session['member_id']
+
+    if request.method == 'GET':
+        try:
+            result = UserProfile.objects.get(pid = user_id )
+        except UserProfile.DoesNotExist:
+            return render(request, 'accounts/profile.html')
+        else:   
+            return render(request, 'accounts/profile.html', {'result':result})
+
+    elif request.method == 'POST':
+
+        email = request.POST['email']
+        name = request.POST['name']
+        validation_email = request.POST['validation_email']
+        birthday = request.POST['birthday']
+        gender = request.POST['gender']
+        uni = request.POST['uni']
+        subject=request.POST['subject']
+        commencement=request.POST['commencement']
+        about_oneself = request.POST['about_oneself']
+
+        result = UserProfile.objects.profileManage(user_id,email,name, validation_email,birthday,gender,uni,subject,commencement,about_oneself)
+        if result == 'success':
+            return render(request, 'accounts/success.html')
+        else:
+            return render(request, 'accounts/profile.html',{'error':result})
+
 
 def isEmailAddressValid( email ):
     """
