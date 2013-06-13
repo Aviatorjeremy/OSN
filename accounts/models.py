@@ -162,7 +162,7 @@ class UserProfile(AbstractBaseUser):
     gender = models.CharField(max_length=1, choices=GENDER)
     university = models.CharField(max_length=40)
     subject = models.CharField(max_length=40)
-    commencement = models.DateTimeField()
+    commencement = models.DateTimeField(blank=True)
     about_oneself = models.TextField(max_length=500)
 
     objects = UserProfileManager()

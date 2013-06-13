@@ -16,4 +16,5 @@ urlpatterns = patterns('',
     #url(r'^sign_up/', include('sign_up.urls')),
     (r'^admin/$', include(admin.site.urls)),
     (r'^accounts/', include('accounts.urls')),
+    #(r'^$', include('accounts.urls')),
 )
