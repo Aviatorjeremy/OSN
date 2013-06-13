@@ -3,9 +3,9 @@ import re
 import string
 import sys 
 reload(sys) 
-sys.setdefaultencoding('utf-8')
+sys.setdefaultencoding('utf-8') 
 
-from django.db import models
+from django.db import models,DatabaseError
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
 
 class MyUserManager(BaseUserManager):
@@ -29,11 +29,9 @@ class MyUserManager(BaseUserManager):
         update_password
         """
         user = self.get(uid = uid)
-        print user, password
         if user.check_password(current_password):
             user.set_password(password)
             user.save()
-            print 'success'
             return 'success'
         else:
             return 'wrong password'
@@ -89,9 +87,55 @@ class MyUser(AbstractBaseUser):
         return self.email
 
 class UserProfileManager(BaseUserManager):
-    def create_profile(self, email, name, validation_email,
+    def profileManage(self, uid, email, name, validation_email,
         birthday, gender, university, subject,commencement,about_oneself):
-        pass
+        """U$*#TRUIHRKJASRH"""
+        try:
+            profile = self.get(pid = uid)
+        except UserProfile.DoesNotExist:
+            profile = self.model(
+                pid = MyUser.objects.get(uid=uid),
+                email = UserProfileManager.normalize_email(email),
+                name = str(name).translate(None, string.punctuation),
+                validation_email= UserProfileManager.normalize_email(validation_email),
+                birthday= birthday,
+                gender=gender,
+                university=str(university).translate(None, string.punctuation),
+                subject=str(subject).translate(None, string.punctuation),
+                commencement=commencement,
+                about_oneself=str(about_oneself).translate(None, string.punctuation),
+            )
+            profile.save()
+            return 'success'
+        else:
+            profile.email = UserProfileManager.normalize_email(email)
+            profile.name = str(name).translate(None, string.punctuation)
+            profile.birthday= birthday
+            profile.gender=gender
+            profile.university=str(university).translate(None, string.punctuation)
+            profile.subject=str(subject).translate(None, string.punctuation)
+            profile.commencement=commencement
+            profile.about_oneself=str(about_oneself).translate(None, string.punctuation)
+            profile.save()
+            return 'success'
+
+    # def update_profile(self, uid, email, name, birthday, gender, university, subject,commencement,about_oneself):
+    # """
+    # update profile (can be refactor **argm)
+    # """
+    #     if 
+    #         profile = self.get(pid = uid)
+    #         profile.email = UserProfileManager.normalize_email(email)
+    #         profile.name = str(name).translate(None, string.punctuation)
+    #         profile.birthday= birthday
+    #         profile.gender=gender
+    #         profile.university=str(university).translate(None, string.punctuation)
+    #         profile.subject=str(subject).translate(None, string.punctuation)
+    #         profile.commencement=commencement
+    #         profile.about_oneself=str(about_oneself).translate(None, string.punctuation)
+    #         profile.save()
+        
+
 
 class UserProfile(AbstractBaseUser):
     GENDER = (
@@ -114,11 +158,15 @@ class UserProfile(AbstractBaseUser):
         max_length=50,
         unique=True,
     )
-    birhday = models.DateTimeField()
+    birthday = models.DateTimeField()
     gender = models.CharField(max_length=1, choices=GENDER)
     university = models.CharField(max_length=40)
     subject = models.CharField(max_length=40)
-    commencement = models.DateTimeField()
+    commencement = models.DateTimeField(blank=True)
     about_oneself = models.TextField(max_length=500)
 
-    
+    objects = UserProfileManager()
+
+    def __unicode__(self):
+        return self.name
+
