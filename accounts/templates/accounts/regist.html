@@ -1,0 +1,14 @@
+<html>
+{{session}}
+<a1>欢迎注册</a1>
+<form action="" method = "post" />{% csrf_token %}
+	<label>邮箱:</label>
+	<input type = "text" name="email"/>
+	<label>密码:</label>
+	<input type = "password" name="password"/>
+	<label>个性域名:</label>
+	<input type = "text" name="udomain"/>
+	<input type = "submit" name="submit" value="提交"/>
+	<input type = "reset" name="reset" value="取消"/>
+</form>
+</html>
