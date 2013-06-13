@@ -1,6 +1,9 @@
 import datetime
 import re
 import string
+import sys 
+reload(sys) 
+sys.setdefaultencoding('utf-8')
 
 from django.db import models
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
