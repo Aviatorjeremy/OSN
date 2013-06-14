@@ -16,6 +16,9 @@ class Message(models.Model):
     like_num = models.IntegerField(default=0)
     share_num = models.IntegerField(default=0)
 
+    class meta:
+    	ording = "-time_published"
+
 class Comment(models.Model):
     cid = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, db_column = 'user')
