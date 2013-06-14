@@ -8,7 +8,7 @@ class Message(models.Model):
         (u'B', u'BLOG'),
     )
     mid = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, db_column = 'user',)
     time_published = models.DateTimeField()
     tweet = models.CharField(max_length=140)
     content_type = models.CharField(max_length=500, choices=CONTENT_TYPE)
@@ -18,6 +18,13 @@ class Message(models.Model):
 
 class Comment(models.Model):
     cid = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User)
-    message = models.ForeignKey(Message)
+    user = models.ForeignKey(User, db_column = 'user')
+    message = models.ForeignKey(Message, db_column = 'message')
     ctxt = models.CharField(max_length=140)
+
+class MsgMeta(models.Model):
+	mmid = models.AutoField(primary_key=True)
+	mid = models.ForeignKey(Message, db_column = 'mid',)
+	uid = models.ForeignKey(User, db_column = 'uid',)
+	like = models.BooleanField(default=False)
+	share = models.BooleanField(default=False)
