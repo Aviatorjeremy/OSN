@@ -1,0 +1,8 @@
+<form action="/contact/" method="post">{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Submit" />
+</form>
+
+{% for m in message %}
+<div><p> m </p></div>
+{% endfor %}
