@@ -1,16 +1,19 @@
 from django.shortcuts import render
 from django.forms import EmailField
 from django.core.exceptions import ValidationError
+from django.views.generic.base import View
+from django.contrib.auth import logout
 
-from accounts.models import MyUser
+from accounts.models import MyUser, UserProfile
 
-def registration(request):
+class Registration(View):
     """
     registration
     """
-    if request.method == 'GET':
+    def get(self,request):
         return render(request, 'accounts/regist.html',{'session':request.session['member_id']})
-    elif request.method == 'POST':
+    
+    def post(self,request):
         email = request.POST['email']
         password = request.POST['password']
         udomain = request.POST['udomain']
@@ -20,14 +23,14 @@ def registration(request):
             return render(request, 'accounts/regist.html')
         return render(request, 'accounts/success.html')
 
-def login(request):
+class Login(View):
     """
     lgoin
     """
-    if request.method == 'GET':
+    def get(self, request):
         return render(request, 'accounts/login.html')
 
-    elif request.method == 'POST':
+    def post(self, request):
 
         email = request.POST['email']
         password = request.POST['password']
@@ -39,15 +42,22 @@ def login(request):
         else:
             return render(request, 'accounts/login.html')
 
+class Logout(View):
+    """
+    Logout
+    """
+    def get(self, request):
+        logout(request)
+        return render(request, 'accounts/success.html',{'session':request.session['member_id']})
 
-def settings(request):
+class Settings(View):
     """
     settings
     """
-    if request.method == 'GET':
+    def get(self,request):
         return render(request, 'accounts/settings.html')
 
-    elif request.method == 'POST':
+    def post(self, request):
         user_id = request.session['member_id']
         current_password = request.POST['current_password']
         new_password = request.POST['new_password']
@@ -57,6 +67,39 @@ def settings(request):
             return render(request, 'accounts/success.html')
         else:
             return render(request, 'accounts/settings.html',{'error':result})
+
+class SetProfile(View):
+    """
+    manage user profile
+    """
+    
+    def get(self, request):
+        uid = request.session['member_id']
+        try:
+            profile = UserProfile.objects.get(pid = uid)
+        except UserProfile.DoesNotExist:
+            return render(request, 'accounts/profile.html')
+        else:
+            return render(request, 'accounts/profile.html', {'profile':profile})
+    
+    def post(self,request):
+        uid = request.session['member_id']
+        email = request.POST['email']
+        name = request.POST['name']
+        validation_email = request.POST['validation_email']
+        birthday = request.POST['birthday']
+        gender = request.POST['gender']
+        university = request.POST['uni']
+        subject = request.POST['subject']
+        commencement = request.POST['commencement']
+        about_oneself = request.POST['about_oneself']
+        result = UserProfile.objects.profileManage(uid, email, name, validation_email,
+            birthday, gender, university, subject,commencement,about_oneself,)
+        if result == 'success':
+            return render(request, 'accounts/success.html')
+        else:
+            return render(request, 'accounts/profile.html')
+
 
 def isEmailAddressValid( email ):
     """

@@ -1,0 +1,23 @@
+<a1>个人信息</a1>
+
+<form action="" method="POST">{% csrf_token %}
+	email:<input type = "text" name="email" value="{{profile.email}}"/></br>
+	name:<input type = "name" name="name" value="{{profile.name}}"/></br>
+	validation_email:<input type = "text" name="validation_email" value="{{profile.validation_email}}"/></br>
+	birthday:<input type = "text" name="birthday" value="{{profile.birthday}}"/></br>
+	{% if profile.gender == 'F'%}
+	gender: 男:<input type="radio" name="gender" value="M" checked="checked" /> 
+	女:<input type="radio" name="gender" value="F"  /></br>
+	?: <input type="radio" name="gender" value="O"  /></br>
+	{% else %}
+	gender: 男:<input type="radio" name="gender" value="M" /> 
+	女:<input type="radio" name="gender" value="F" checked="checked" /></br>
+	?:<input type="radio" name="gender" value="O"  /></br>
+	{% endif %}
+	university:<input type="text" name="uni" value="{{profile.university}}"/></br>
+	subject:<input type = "text" name="subject" value="{{profile.subject}}"/></br>
+	commencement:<input type = "text" name="commencement" value="{{profile.commencement}}"/></br>
+	自我描述:<input type = "text" name = "about_oneself" value="{{profile.about_oneself}}"/></br>
+	<input type = "submit" name="submit" value="提交"/>
+	<input type = "reset" name="reset" value="取消"/>
+</form>

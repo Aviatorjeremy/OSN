@@ -1,7 +1,10 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns
+from accounts.views import Registration, Login, Logout, Settings, SetProfile
 
 urlpatterns = patterns('',
-	url(r'^registration/$','accounts.views.registration'),
-	url(r'^login/$', 'accounts.views.login'),
-	url(r'^settings/$', 'accounts.views.settings'),
+    (r'^registration/$',Registration.as_view()),
+    (r'^login/$', Login.as_view()),
+    (r'^logout/$', Logout.as_view()),
+    (r'^settings/$', Settings.as_view()),
+    (r'^settings/profile/$', SetProfile.as_view()),
 )
