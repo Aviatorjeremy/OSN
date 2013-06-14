@@ -170,3 +170,7 @@ class UserProfile(AbstractBaseUser):
     def __unicode__(self):
         return self.name
 
+class UniversityList(models.Model):
+    uni_id = models.AutoField(primary_key=True)
+    university_name = models.CharField(unique=True, max_length=50,)
+    country = models.CharField(unique = True, max_length=50,)
