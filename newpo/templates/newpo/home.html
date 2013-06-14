@@ -1,0 +1,8 @@
+<form action="/new/tweet" method="post">{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="发送" />
+</form>
+
+{% for m in msg %}
+<div><p>{{ m.tweet }}, 发送于 {{ m.time_published }}</p></div>
+{% endfor %}
