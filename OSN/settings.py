@@ -9,6 +9,8 @@ EMAIL_HOST_PASSWORD='password'
 DEFAULT_FROM_EMAIL = 'support@OSN.com'
 TEMPLATE_DEBUG = DEBUG
 
+AUTH_USER_MODEL = 'accounts.MyUser'
+
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )

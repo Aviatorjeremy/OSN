@@ -66,14 +66,8 @@ class MyUser(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_valid = models.BooleanField(default=False)
-    # name = models.models.CharField(max_length=20)
-    # validation_email = models.EmailField(max_length=50)
-    # birhday = models.DatetimeField()
-    # gender = models.CharField(max_length=1, choices=GENDER)
-    # university = models.CharField(max_length=40)
-    # subject = models.CharField(max_length=40)
-    # commencement = models.DatetimeField()
-    # about_oneself = models.TextField(max_length=500)
+
+    USERNAME_FIELD = 'email'
 
     objects = MyUserManager()
 

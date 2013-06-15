@@ -7,11 +7,11 @@
 	birthday:<input type = "text" name="birthday" value="{{profile.birthday}}"/></br>
 	{% if profile.gender == 'F'%}
 	gender: 男:<input type="radio" name="gender" value="M" checked="checked" /> 
-	女:<input type="radio" name="gender" value="F"  /></br>
+	女:<input type="radio" name="gender" value="F"  />
 	?: <input type="radio" name="gender" value="O"  /></br>
 	{% else %}
 	gender: 男:<input type="radio" name="gender" value="M" /> 
-	女:<input type="radio" name="gender" value="F" checked="checked" /></br>
+	女:<input type="radio" name="gender" value="F" checked="checked" />
 	?:<input type="radio" name="gender" value="O"  /></br>
 	{% endif %}
 	university:<input type="text" name="uni" value="{{profile.university}}"/></br>
